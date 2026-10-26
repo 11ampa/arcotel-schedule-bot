@@ -1,0 +1,24 @@
+[Unit]
+Description=Arcotel Schedule Telegram Bot (АКТ СПбГУТ)
+After=network.target network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/arcotel-schedule-bot
+Environment=PYTHONPATH=/opt/arcotel-schedule-bot
+Environment=PYTHONUNBUFFERED=1
+EnvironmentFile=-/opt/arcotel-schedule-bot/.env
+ExecStart=/opt/arcotel-schedule-bot/.venv/bin/python3 -m bot.main
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+# Sandboxing & security
+ProtectSystem=full
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
